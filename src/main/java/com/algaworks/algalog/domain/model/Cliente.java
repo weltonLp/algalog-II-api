@@ -2,19 +2,33 @@ package com.algaworks.algalog.domain.model;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "cliente")
 public class Cliente {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
 	private String email;
+	
+	@Column(name = "fone")
 	private String telefone;
 	
 	public Cliente() {
 		
 	}
-	public Cliente(Long id, String nome, String email, String telefone) {
+	public Cliente(String nome, String email, String telefone) {
 		super();
-		this.id = id;
+		
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
