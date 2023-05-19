@@ -21,6 +21,7 @@ import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
 import com.algaworks.algalog.domain.ValidationGroups;
+import com.algaworks.algalog.domain.exception.NegocioException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -80,5 +81,26 @@ public class Entrega {
 //		this.ocorrencias.add(ocorrencia);
 		
 		return ocorrencia;
-	}	
+	}
+
+
+
+
+	public void finalizar() {
+		
+		if(naoPodeSerFinalizada()) {
+			throw new NegocioException("Entrega não pode ser Finalizada");
+		}
+		setStatus(StatusEntrega.FINALIZADA);
+		setDataFinalizacao(OffsetDateTime.now());
+		
+	}
+	
+	public boolean podeSerFinalizada() {
+		return StatusEntrega.PENDENTE.equals(getStatus());
+	}
+	
+	public boolean naoPodeSerFinalizada() {
+		return !podeSerFinalizada();
+	}
 }
